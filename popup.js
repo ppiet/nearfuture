@@ -6,6 +6,13 @@ function printDay(date) {
   return `${date.getDate()}${suffixes[date.getDate() % 10]}`;
 }
 
+function setAndCopy(textField, value, messageField) {
+  textField.value=value;
+  textField.select();
+  document.execCommand('copy');
+  messageField.innerHTML = 'copied!';
+}
+
 function add(tableElement, offset, date) {
   let row = tableElement.insertRow(-1);
   let offsetCell = row.insertCell(-1);
@@ -15,26 +22,33 @@ function add(tableElement, offset, date) {
     offsetCell.innerHTML = `+${offset}d`;
   }
 
-  let dateCell = row.insertCell(-1);
-  const id = `date-${offset}`;
-  let formattedDate =
-    `${days[date.getDay()]}, ${months[date.getMonth()]} ${printDay(date)}`;
-  dateCell.innerHTML = `<input type="text" id=${id} value="${formattedDate}" readonly />`
+  let textField = document.getElementById('nf-copy-field');
+  let messageField = document.getElementById('nf-message');
 
-  let actionCell = row.insertCell(-1);
-  let button = document.createElement('button');
-  let label = document.createTextNode('copy');
-  button.appendChild(label);
-  actionCell.appendChild(button);
-  button.addEventListener('click', (event) => {
-    let textField = document.getElementById(id);
-    textField.select();
-    document.execCommand('copy');
+  let humanFriendlyDate =
+    `${days[date.getDay()]}, ${months[date.getMonth()]} ${printDay(date)}`;
+  let humanFriendlyCell = row.insertCell(-1);
+  let humanFriendlyButton = document.createElement('button');
+  let humanFriendlyLabel = document.createTextNode(humanFriendlyDate);
+  humanFriendlyButton.appendChild(humanFriendlyLabel);
+  humanFriendlyCell.appendChild(humanFriendlyButton);
+  humanFriendlyButton.addEventListener('click', (event) => {
+    setAndCopy(textField, humanFriendlyDate, messageField);
+  });
+
+  let isoDate = date.toISOString().split("T")[0];
+  let isoCell = row.insertCell(-1);
+  let isoButton = document.createElement('button');
+  let isoLabel = document.createTextNode(isoDate);
+  isoButton.appendChild(isoLabel);
+  isoCell.appendChild(isoButton);
+  isoButton.addEventListener('click', (event) => {
+    setAndCopy(textField, isoDate, messageField);
   });
 }
 
 function refresh() {
-  let contentTable = document.getElementById('content-table');
+  let contentTable = document.getElementById('nf-table');
   contentTable.innerHTML = '';
 
   let date = new Date();

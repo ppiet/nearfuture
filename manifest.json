@@ -2,8 +2,8 @@
   "manifest_version": 2,
 
   "name": "Near Future",
-  "description": "This extension displays the dates of the next few days and allows the user to copy them to clipboard.",
-  "version": "1.0",
+  "description": "Displays the current date and a few subsequent days in globally inambiguous formats",
+  "version": "1.1",
 
   "browser_action": {
     "default_icon": "ic_today_black_24dp_2x.png",

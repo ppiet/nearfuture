@@ -8,14 +8,13 @@
         white-space: nowrap;
       }
 
-      h1 {
-        font-size: 15px;
+      #nf-copy-field {
+        width: 80px; 
       }
 
-      #container {
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
+      #nf-table button {
+        text-align: left;
+        width: 100%;
       }
     </style>
 
@@ -23,8 +22,11 @@
   </head>
 
   <body>
-    <div id="content-container">
-      <table id="content-table">
+    <div id="nf-container">
+      <input type="text" id="nf-copy-field" readonly />
+      <b id="nf-message">click a date to copy</b>
+      <hr/>
+      <table id="nf-table">
         <tr><td>Empty</td></tr>
       </table>
     </div>
